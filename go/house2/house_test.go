@@ -1,12 +1,25 @@
-// As ever, there are different ways to complete this exercise.
-// Try using using programmatic recursion to generate the verses of the song,
-// thus reflecting the song's grammatical recursion.
-
-// While recursion isn't always the simplest or most efficient solution to a problem,
-// it's a powerful programming technique nonetheless.
+// Embed embeds a noun phrase as the object of relative clause with a
+// transitive verb.
 //
-// New to recursion? Here's a quick introduction:
-// https://www.golang-book.com/books/intro/7#section5
+// Argument relPhrase is a phrase with a relative clause, minus the object
+// of the clause.  That is, relPhrase consists of a subject, a relative
+// pronoun, a transitive verb, possibly a preposition, but then no object.
+//
+//    func Embed(relPhrase, nounPhrase string) string
+
+// Verse generates a verse of a song with relative clauses that have
+// a recursive structure.
+//
+//    func Verse(subject string, relPhrases []string, nounPhrase string) string
+//
+// There are different ways to do this of course, but try using Embed as a
+// subroutine and using programmatic recursion that reflects the grammatical
+// recursion.
+
+// Song generates the full text of "The House That Jack Built".  Oh yes, you
+// could just return a string literal, but humor us; use Verse as a subroutine.
+//
+//    func Song() string
 
 package house
 
@@ -15,11 +28,16 @@ import (
 	"testing"
 )
 
-const targetTestVersion = 1
-
 var (
-	// song copied from README
-	expectedSong = `This is the house that Jack built.
+	s = "This is"
+	r = []string{
+		"the cat that broke",
+		"the vase that was on",
+	}
+	p    = "the shelf."
+	last = len(r) - 1
+	// song copied from readme
+	song = `This is the house that Jack built.
 
 This is the malt
 that lay in the house that Jack built.
@@ -108,37 +126,34 @@ that worried the cat
 that killed the rat
 that ate the malt
 that lay in the house that Jack built.`
-
-	expectedVerses = strings.Split(expectedSong, "\n\n")
 )
 
-func TestTestVersion(t *testing.T) {
-	if testVersion != targetTestVersion {
-		t.Fatalf("Found testVersion = %v, want %v", testVersion, targetTestVersion)
+func TestEmbed(t *testing.T) {
+	l := r[last]
+	want := l + " " + p
+	if e := Embed(l, p); e != want {
+		t.Fatalf("Embed(%q, %q) = %q, want %q.", l, p, e, want)
 	}
 }
 
 func TestVerse(t *testing.T) {
-	for v := 0; v < len(expectedVerses); v++ {
-		if ret := Verse(v + 1); ret != expectedVerses[v] {
-			t.Fatalf("Verse(%d) =\n%q\n  want:\n%q", v+1, ret, expectedVerses[v])
+	for i := len(r); i >= 0; i-- {
+		ri := r[i:]
+		want := s + " " + strings.Join(append(ri, p), " ")
+		if v := Verse(s, ri, p); v != want {
+			t.Fatalf("Verse(%q, %q, %q) = %q, want %q.", s, ri, p, v, want)
 		}
 	}
 }
 
 func TestSong(t *testing.T) {
 	s := Song()
-	if s == expectedSong {
+	if s == song {
 		return
 	}
 	// a little help in locating an error
-	gotStanzas := len(strings.Split(s, "\n\n"))
-	wantStanzas := len(expectedVerses)
-	if wantStanzas != gotStanzas {
-		t.Fatalf("Song() has %d verse(s), want %d verses", gotStanzas, wantStanzas)
-	}
 	got := strings.Split(s, "\n")
-	want := strings.Split(expectedSong, "\n")
+	want := strings.Split(song, "\n")
 	var g, w string
 	var i int
 	for i, w = range want {
@@ -150,5 +165,5 @@ func TestSong(t *testing.T) {
 			break
 		}
 	}
-	t.Fatalf("Song() line %d =\n%q\n want \n%q", i+1, g, w)
+	t.Fatalf("Song() line %d = %q, want %q", i+1, g, w)
 }

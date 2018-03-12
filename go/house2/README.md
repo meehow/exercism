@@ -1,25 +1,21 @@
-// As ever, there are different ways to complete this exercise.
-// Try using using programmatic recursion to generate the verses of the song,
-// thus reflecting the song's grammatical recursion.
+# House
 
-// While recursion isn't always the simplest or most efficient solution to a problem,
-// it's a powerful programming technique nonetheless.
-//
-// New to recursion? Here's a quick introduction:
-// https://www.golang-book.com/books/intro/7#section5
+Write a program that outputs the nursery rhyme 'This is the House that Jack Built'.
 
-package house
+> [The] process of placing a phrase of clause within another phrase of
+> clause is called embedding. It is through the processes of recursion
+> and embedding that we are able to take a finite number of forms (words
+> and phrases) and construct an infinite number of expressions.
+> Furthermore, embedding also allows us to construct an infinitely long
+> structure, in theory anyway.
 
-import (
-	"strings"
-	"testing"
-)
+- [papyr.com](http://papyr.com/hypertextbooks/grammar/ph_noun.htm)
 
-const targetTestVersion = 1
 
-var (
-	// song copied from README
-	expectedSong = `This is the house that Jack built.
+The nursery rhyme reads as follows:
+
+```plain
+This is the house that Jack built.
 
 This is the malt
 that lay in the house that Jack built.
@@ -107,48 +103,19 @@ that tossed the dog
 that worried the cat
 that killed the rat
 that ate the malt
-that lay in the house that Jack built.`
+that lay in the house that Jack built.
+```
 
-	expectedVerses = strings.Split(expectedSong, "\n\n")
-)
+To run the tests simply run the command `go test` in the exercise directory.
 
-func TestTestVersion(t *testing.T) {
-	if testVersion != targetTestVersion {
-		t.Fatalf("Found testVersion = %v, want %v", testVersion, targetTestVersion)
-	}
-}
+If the test suite contains benchmarks, you can run these with the `-bench`
+flag:
 
-func TestVerse(t *testing.T) {
-	for v := 0; v < len(expectedVerses); v++ {
-		if ret := Verse(v + 1); ret != expectedVerses[v] {
-			t.Fatalf("Verse(%d) =\n%q\n  want:\n%q", v+1, ret, expectedVerses[v])
-		}
-	}
-}
+    go test -bench .
 
-func TestSong(t *testing.T) {
-	s := Song()
-	if s == expectedSong {
-		return
-	}
-	// a little help in locating an error
-	gotStanzas := len(strings.Split(s, "\n\n"))
-	wantStanzas := len(expectedVerses)
-	if wantStanzas != gotStanzas {
-		t.Fatalf("Song() has %d verse(s), want %d verses", gotStanzas, wantStanzas)
-	}
-	got := strings.Split(s, "\n")
-	want := strings.Split(expectedSong, "\n")
-	var g, w string
-	var i int
-	for i, w = range want {
-		if len(got) <= i {
-			g = ""
-			break
-		}
-		if g = got[i]; g != w {
-			break
-		}
-	}
-	t.Fatalf("Song() line %d =\n%q\n want \n%q", i+1, g, w)
-}
+For more detailed info about the Go track see the [help
+page](http://exercism.io/languages/go).
+
+## Source
+
+British nursery rhyme [http://en.wikipedia.org/wiki/This_Is_The_House_That_Jack_Built](http://en.wikipedia.org/wiki/This_Is_The_House_That_Jack_Built)

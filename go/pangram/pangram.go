@@ -22,3 +22,14 @@ func IsPangram(input string) bool {
 	}
 	return letters == 67108863
 }
+
+// func IsPangram(input string) bool {
+// 	letters := make(map[rune]bool)
+// 	for _, l := range strings.ToLower(input) {
+// 		if l < 'a' || l > 'z' {
+// 			continue
+// 		}
+// 		letters[l] = true
+// 	}
+// 	return len(letters) == 26
+// }

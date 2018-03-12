@@ -1,6 +1,6 @@
 # House
 
-Write a program that outputs the nursery rhyme 'This is the House that Jack Built'.
+Output the nursery rhyme 'This is the House that Jack Built'.
 
 > [The] process of placing a phrase of clause within another phrase of
 > clause is called embedding. It is through the processes of recursion
@@ -106,16 +106,27 @@ that ate the malt
 that lay in the house that Jack built.
 ```
 
-To run the tests simply run the command `go test` in the exercise directory.
+## Running the tests
+
+To run the tests run the command `go test` from within the exercise directory.
 
 If the test suite contains benchmarks, you can run these with the `-bench`
 flag:
 
     go test -bench .
 
-For more detailed info about the Go track see the [help
-page](http://exercism.io/languages/go).
+Keep in mind that each reviewer will run benchmarks on a different machine, with
+different specs, so the results from these benchmark tests may vary.
+
+## Further information
+
+For more detailed information about the Go track, including how to get help if
+you're having trouble, please visit the exercism.io [Go language page](http://exercism.io/languages/go/about).
 
 ## Source
 
 British nursery rhyme [http://en.wikipedia.org/wiki/This_Is_The_House_That_Jack_Built](http://en.wikipedia.org/wiki/This_Is_The_House_That_Jack_Built)
+
+## Submitting Incomplete Problems
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
