@@ -39,7 +39,7 @@ func Products(fmin, fmax int) (pmin, pmax Product, err error) {
 				break
 			}
 			prod := x * y
-			if isPalindrome(prod) {
+			if (prod <= pmin.Product || prod >= pmax.Product) && isPalindrome(prod) {
 				if pmax.Product == 0 {
 					pmin.Product = prod
 					pmin.Factorizations = [][2]int{{y, x}}
