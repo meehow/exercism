@@ -6,31 +6,22 @@ var pair = map[rune]rune{
 	'(': ')',
 }
 
-// Cell represents one cell of bracket chain
-type Cell struct {
-	Parent  *Cell
-	Bracket rune
-}
-
 // Bracket checks if bracket chain is valid
 func Bracket(input string) (bool, error) {
-	parent := new(Cell)
+	brackets := make([]rune, 0, len(input)/2)
 	for _, c := range input {
 		switch c {
 		case '[', '{', '(':
-			parent = &Cell{
-				Parent:  parent,
-				Bracket: c,
-			}
+			brackets = append(brackets, c)
 		case ']', '}', ')':
-			if parent.Parent == nil {
+			if len(brackets) == 0 {
 				return false, nil
 			}
-			if pair[parent.Bracket] != c {
+			if pair[brackets[len(brackets)-1]] != c {
 				return false, nil
 			}
-			parent = parent.Parent
+			brackets = brackets[:len(brackets)-1]
 		}
 	}
-	return parent.Parent == nil, nil
+	return len(brackets) == 0, nil
 }
